@@ -8,6 +8,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { TranslateModule } from '@ngx-translate/core';
+import { registerLocaleData } from '@angular/common';
+
+import localePt from '@angular/common/locales/pt';
+import localeFr from '@angular/common/locales/fr';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localePt);
+registerLocaleData(localeFr);
+registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +29,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
     ReactiveFormsModule,
     MatInputModule,
     InputMaskModule,
+    TranslateModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

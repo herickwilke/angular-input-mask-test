@@ -1,6 +1,9 @@
+import { NumberSymbol, getLocaleNumberSymbol } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
+import { TranslateService } from '@ngx-translate/core';
+import { getUserLocale } from 'get-user-locale';
 
 @Component({
   selector: 'app-root',
@@ -8,27 +11,28 @@ import { createMask } from '@ngneat/input-mask';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'test-13';
+  constructor(private translateService: TranslateService) {}
 
-  // Can be set as a configuration or by binding the user locale in the future
-  localeOptions = {
-    america: {
-      decimalSeparator: '.',
-      thousandSeparator: ',',
-    },
-    europe: {
-      decimalSeparator: ',',
-      thousandSeparator: '.',
-    },
-  };
+  userLocale: string = this.translateService.getBrowserLang() || 'en';
+  // userLocale: string = 'fr';
+
+  // is possible to create here a cascade switch case that end up on default "en" locale
+  // between the imported languages, because if the language of the user is not importated on
+  // in app.module.ts, than it will fails into an error.
 
   testInputMask = createMask({
     // min
     // max
     alias: 'numeric',
     digits: 2,
-    groupSeparator: this.localeOptions.america.thousandSeparator,
-    radixPoint: this.localeOptions.america.decimalSeparator,
+    groupSeparator: getLocaleNumberSymbol(
+      this.userLocale,
+      NumberSymbol.CurrencyGroup
+    ),
+    radixPoint: getLocaleNumberSymbol(
+      this.userLocale,
+      NumberSymbol.CurrencyDecimal
+    ),
     digitsOptional: false,
     allowMinus: true,
     rightAlign: false,
@@ -40,7 +44,8 @@ export class AppComponent implements OnInit {
   control = new FormControl();
 
   ngOnInit(): void {
-    this.control.setValue(1.8);
+    console.log(this.translateService.getBrowserLang());
+    this.control.setValue(1515265.8);
   }
 
   logToConsoleAndReassignValue(value: Number): void {
