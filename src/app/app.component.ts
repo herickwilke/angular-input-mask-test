@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     radixPoint: this.localeOptions.america.decimalSeparator,
     digitsOptional: false,
     allowMinus: true,
+    rightAlign: false,
     parser: (value: string) => {
       return value.replace(',', '');
     },
