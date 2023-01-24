@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 import { TranslateService } from '@ngx-translate/core';
-import { getUserLocale } from 'get-user-locale';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +10,15 @@ import { getUserLocale } from 'get-user-locale';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private translateService: TranslateService) {}
+  control = new FormControl();
 
-  userLocale: string = this.translateService.getBrowserLang() || 'en';
-  // userLocale: string = 'fr';
+  importedLanguages = ['fr', 'pt', 'de'];
 
-  // is possible to create here a cascade switch case that end up on default "en" locale
-  // between the imported languages, because if the language of the user is not importated on
-  // in app.module.ts, than it will fails into an error.
+  browserLanguage = this.translateService.getBrowserLang() || 'en';
+
+  userLocale: string = this.importedLanguages.includes(this.browserLanguage)
+    ? this.browserLanguage
+    : 'en';
 
   testInputMask = createMask({
     // min
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     },
   });
 
-  control = new FormControl();
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     console.log(this.translateService.getBrowserLang());
