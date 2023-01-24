@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     allowMinus: true,
     rightAlign: false,
     parser: (value: string) => {
-      return value.replace(',', '');
+      return value;
     },
   });
 

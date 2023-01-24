@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { TranslateModule } from '@ngx-translate/core';
-import { registerLocaleData } from '@angular/common';
+import { DecimalPipe, registerLocaleData } from '@angular/common';
 
 import localePt from '@angular/common/locales/pt';
 import localeFr from '@angular/common/locales/fr';
@@ -31,7 +31,7 @@ registerLocaleData(localeDe);
     InputMaskModule,
     TranslateModule.forRoot(),
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
