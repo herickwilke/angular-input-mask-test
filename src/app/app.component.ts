@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     allowMinus: true,
     rightAlign: false,
     parser: (value: string) => {
-      return value;
+      return this.localeParseFloat(value, this.userLocale);
     },
   });
 
@@ -48,7 +48,20 @@ export class AppComponent implements OnInit {
     this.control.setValue(1515265.8);
   }
 
-  logToConsoleAndReassignValue(value: Number): void {
+  localeParseFloat(value: string, locale: string) {
+    // Get the thousands and decimal separator characters used in the locale.
+    let [, thousandsSeparator, , , , decimalSeparator] =
+      (1111.1).toLocaleString(locale);
+    // Remove thousand separators, and put a point where the decimal separator occurs
+    value = Array.from(value, (c) =>
+      c === thousandsSeparator ? '' : c === decimalSeparator ? '.' : c
+    ).join('');
+    // Now it can be parsed
+    return parseFloat(value);
+  }
+
+  logToConsoleAndReassignValue(value: string): void {
+    console.log(value);
     this.control.setValue(value);
     console.log(this.control);
   }
