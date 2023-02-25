@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { createMask } from '@ngneat/input-mask';
 import { TranslateService } from '@ngx-translate/core';
+import getUserLocale from 'get-user-locale';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit {
   control = new FormControl();
+  supportedLanguages = ['fr', 'pt', 'de'];
 
-  importedLanguages = ['fr', 'pt', 'de'];
-
-  browserLanguage = this.translateService.getBrowserLang() || 'en';
-
-  userLocale: string = this.importedLanguages.includes(this.browserLanguage)
-    ? this.browserLanguage
-    : 'en';
+  defaultLocale = 'en'
+  retrieveLocale: string = getUserLocale({fallbackLocale: 'en-US'})!.substring(0,2)
+  userLocale: string = this.supportedLanguages.includes(this.retrieveLocale) ? this.retrieveLocale : 'en'
 
   testInputMask = createMask({
     // min
@@ -44,7 +42,8 @@ export class AppComponent implements OnInit {
   constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
-    console.log(this.translateService.getBrowserLang());
+    console.log(this.retrieveLocale)
+    console.log(this.userLocale)
     this.control.setValue(1515265.8);
   }
 

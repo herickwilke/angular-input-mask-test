@@ -23,6 +23,7 @@
     "@ngneat/input-mask": "^5.4.0",
     "@ngx-translate/core": "^14.0.0",
     "@types/lodash.memoize": "^4.1.7",
+    "get-user-locale": "^2.1.3",
     "inputmask": "5.0.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
